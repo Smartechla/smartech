@@ -18,9 +18,15 @@
     --foreground: #ededed;
   }
 }
-
+/*
+var(--color-primary)
+var(--color-secondary)
+*/
 body {
-  background: var(--background);
+  background: var(--color-secondary);
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
+}
+h1 {
+  color: var(--color-primary);
 }
