@@ -1,0 +1,16 @@
+---
+import ClientView from "../components/ClientView";
+import EmployeeView from "../components/EmployeeView"
+import Layout from "../layout/Layout.astro";
+
+const host = Astro.request.headers.get('host')
+const hostLocal = import.meta.env.HOST;
+
+---
+
+<Layout title={"home"}>
+    {host==hostLocal?
+        <EmployeeView client:only/>:
+        <ClientView client:only/>
+    }
+</Layout>

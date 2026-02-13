@@ -1,0 +1,25 @@
+---
+import MetaData from "../components/MetaData.astro";
+import "../styles/global.css"
+
+const {title} = Astro.props
+const colorPrimary = "#0F172A";
+
+---
+
+<html lang="es">
+	<head>
+		<MetaData />
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+		<title>{title}</title>
+	</head>
+	<body>
+		<slot/>
+	</body>
+</html>
+
+<style define:vars={{colorPrimary}}>
+    :root {
+        --color-primary: var(--colorPrimary);
+    }
+</style>
