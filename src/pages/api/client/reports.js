@@ -4,6 +4,17 @@ import { ReportsClient } from "../../../db/schema";
 import { getHostClient } from '../../../utils/getHostClient';
 import { sendGroup } from '../../../utils/botTelegram';
 
+export const GET = async ({ request }) =>{
+    try{
+        const client = await getHostClient(request)
+        const allReport = await db.query.ReportsClient.findMany({where: (rp,{eq})=>eq(rp.clientId, client.id)})
+        return responseHandle(allReport, 200)
+    }
+    catch(error){
+        console.log(error)
+    }
+}
+
 export const POST = async ({request}) => {
     try{
         const client = await getHostClient(request)
@@ -23,17 +34,6 @@ export const POST = async ({request}) => {
         }
 
         return responseHandle({message: "Este cliente no esta registrado"}, 400)
-    }
-    catch(error){
-        console.log(error)
-    }
-}
-
-export const GET = async ({ request }) =>{
-    try{
-        const client = await getHostClient(request)
-        const allReport = await db.query.ReportsClient.findMany({where: (rp,{eq})=>eq(rp.clientId, client.id)})
-        return responseHandle(allReport, 200)
     }
     catch(error){
         console.log(error)

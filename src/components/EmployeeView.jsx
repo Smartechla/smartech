@@ -41,7 +41,7 @@ export default () => {
             <form method="post" className='form'>
                 <label>
                     <p>nombre del usuario</p>
-                    <input type="text" name="usuario" value={document.usuario || ''} onChange={handleChange} />
+                    <input type="text" name="usuario" value={document.user || ''} onChange={handleChange} />
                 </label>
 
                 <label>
@@ -61,7 +61,7 @@ export default () => {
 
                 <label>
                     <p>almacenamiento</p>
-                    <input type="text" name="almacenamiento" value={document.almacenamiento || ''} onChange={handleChange} />
+                    <input type="text" name="almacenamiento" value={document.storage || ''} onChange={handleChange} />
                 </label>
 
                 <label>
@@ -82,11 +82,6 @@ export default () => {
                 <label>
                     <p>BIOS</p>
                     <input type="text" name="bios" value={document.bios || ''} onChange={handleChange} />
-                </label>
-
-                <label>
-                    <p>FUENTE DE PODER</p>
-                    <input type="text" name="fuente" value={document.fuente || ''} onChange={handleChange} />
                 </label>
 
                 <button type="submit">Enviar</button>
