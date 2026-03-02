@@ -20,10 +20,20 @@ export const POST = async ({request}) => {
         const client = await getHostClient(request)
 
         if(client){
-            const {text} = await request.json()
+            const {user, pc, OS, motherboard, storage, ram, cpu, gpu, bios, description, status} = await request.json;
+
             const data = {
-                text,
-                status: "Pendiente",
+                user,
+                pc,
+                OS,
+                motherboard,
+                storage,
+                ram,
+                cpu,
+                gpu,
+                bios,
+                description,
+                status: status?"Atendido":"Pendiente",
                 clientId: client.id,
             }
             const newReporte = await db.insert(ReportsClient).values(data).returning();
