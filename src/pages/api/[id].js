@@ -1,44 +1,32 @@
-import path from "node:path"
-import fs from "node:fs/promises"
+import { eq } from "drizzle-orm";
+import { db } from "../..";
+import { Clients } from "../../db/schema";
 import responseHandle from "../../utils/reponseHandle";
+import { sendDeleteClient } from "../../utils/botTelegram";
+import { adminPass } from "../../utils/verify";
 
-export async function GET ({params}){
+export const DELETE = async ({request,params})=>{
     try{
         const {id} = params;
-
-        const filePath = path.join(process.cwd(), "src", "uploads", `image${id}.png`);
-        const img = await fs.readFile(filePath)
-        
-        return new Response(img, {headers: {"Content-type": "image/png"}},{status: 200});
-    }
-    catch(error){
-        console.log(error)
-    }
-}
-
-export const POST = async ({params, request}) =>{
-    try{
-        const { id } = params
-        const form = await request.formData();
-        const text = JSON.parse(form.get("text"));
-        const file = form.get("file");
-
-        const bytes = await file.arrayBuffer();
-        const buffer = Buffer.from(bytes);
-
-        const extension = file.name.slice(file.name.lastIndexOf("."))
-        const fileName = `image${id}${extension}`
-
-        await fs.mkdir(path.join(process.cwd(), "src", "uploads"),{recursive: true})
-        const filePath = path.join(process.cwd(), "src", "uploads",fileName)
-
-        await fs.writeFile(filePath, buffer);
-        const data = {message: `hola ${text}`}
-        
-        return responseHandle(data, 201)
+        if(isNaN(Number(id))){
+            throw new Error("El params no es un ID")
+        }
+        if(await adminPass(request)){
+            const client = await db.query.Clients.findFirst({where: (c,{eq})=>eq(c.id, id)})
+            const res = await db.delete(Clients).where(
+               eq(Clients.id, id)
+            ).returning({id: Clients.id});
+            
+            if(res.length != 0){
+                sendDeleteClient(client.name)
+                return responseHandle({message: "borrado con exito"} , 200)
+            }else{
+                return responseHandle({message: "No se pudo eliminar el reporte"}, 400)
+            }
+        }else{
+            throw new Error("Sin permisos para realizar la accion")
+        }
     }catch(error){
-        console.log("este es el "+error)
+        return responseHandle({message: error.message}, 403)
     }
-
 }
-

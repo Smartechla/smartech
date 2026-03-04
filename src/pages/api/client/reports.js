@@ -3,11 +3,17 @@ import { db } from "../../../index";
 import { ReportsClient } from "../../../db/schema";
 import { getHostClient } from '../../../utils/getHostClient';
 import { sendGroup } from '../../../utils/botTelegram';
+import { adminPass } from "../../../utils/verify";
 
 export const GET = async ({ request }) =>{
     try{
-        const client = await getHostClient(request)
-        const allReport = await db.query.ReportsClient.findMany({where: (rp,{eq})=>eq(rp.clientId, client.id)})
+        const client = await getHostClient(request);
+        let allReport;
+        if(await adminPass(request)){
+            allReport = await db.query.ReportsClient.findMany()
+        }else{
+            allReport = await db.query.ReportsClient.findMany({where: (rp,{eq})=>eq(rp.clientId, client.id)})
+        }
         return responseHandle(allReport, 200)
     }
     catch(error){

@@ -14,7 +14,7 @@ export const ReportsClient = pgTable("reportsClient", {
     bios: text(),
     description: text(),
     status: varchar("status", {enum: ["Atendido", "Pendiente"]}),
-    clientId: integer().references(()=>Clients.id)
+    clientId: integer().references(()=>Clients.id,{onDelete:'cascade'})
 });
 
 export const Clients = pgTable('clients', {
