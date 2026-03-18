@@ -7,12 +7,15 @@ import node from '@astrojs/node';
 
 // https://astro.build/config
 export default defineConfig({
-  site: "https://www.smartechla.com/",
+  site: "http://reporte.smartech.com",
   output: 'server',
   integrations: [react()],
   adapter: node({
     mode: 'standalone'
   }),
+  security:{
+    checkOrigin: false
+  },
   server: {
     host: true,
     allowedHosts: true

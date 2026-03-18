@@ -1,12 +1,12 @@
-import { Clients } from "../../db/schema";
-import { db } from "../../index";
-import responseHandle from "../../utils/reponseHandle";
-import { adminPass } from "../../utils/verify";
+import { Clients } from "../../../db/schema";
+import { db } from "../../../index";
+import responseHandle from "../../../utils/reponseHandle";
+import { adminPass } from "../../../utils/verify";
 
 export const POST = async ({request})=>{
     try{
         if(await adminPass(request)){
-
+           
             const { name } = await request.json();
             
             const newClient = await db.insert(Clients).values({name}).returning();

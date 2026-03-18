@@ -46,8 +46,7 @@ export const PUT = async ({request, params}) => {
     try{
         const {client, id, conditions} = await verify(request, params);
         
-        const {user, pc, OS, motherboard, storage, ram, cpu, gpu, bios, description, status} = await request.json;
-
+        const {user, pc, OS, motherboard, storage, ram, cpu, gpu, bios, description, status} = await request.json();
         const res = await db.update(ReportsClient)
             .set({
                 user,

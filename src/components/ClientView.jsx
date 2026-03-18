@@ -10,7 +10,7 @@ export default () =>{
     },[])
 
     const getReports = async()=>{
-        const res = await fetch('/api/client/reports')
+        const res = await fetch('/api/client')
         const data = await res.json()
         setReports(data)
 
@@ -21,7 +21,7 @@ export default () =>{
             alert("explique el problema porfavor porfavor")
             return;
         }
-        const res = await fetch('/api/client/reports', {
+        const res = await fetch('/api/client', {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify({text})

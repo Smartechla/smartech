@@ -1,9 +1,9 @@
 import { eq } from "drizzle-orm";
-import { db } from "../..";
-import { Clients } from "../../db/schema";
-import responseHandle from "../../utils/reponseHandle";
-import { sendDeleteClient } from "../../utils/botTelegram";
-import { adminPass } from "../../utils/verify";
+import { db } from "../../..";
+import { Clients } from "../../../db/schema";
+import responseHandle from "../../../utils/reponseHandle";
+import { sendDeleteClient } from "../../../utils/botTelegram";
+import { adminPass } from "../../../utils/verify";
 
 export const DELETE = async ({request,params})=>{
     try{
