@@ -17,7 +17,7 @@ export default ({reports, getReports})=>{
             <div className="container__report">
                 {reports?.map(report=>(
                     <div key={report.id} className="report">
-                        <h3>{report.text}</h3>
+                        <h3>{report.description}</h3>
                         <div>
                             <button onClick={()=>deleteReport(report.id)}>borrar</button>
                         </div>

@@ -12,7 +12,7 @@ export const ReportsClient = pgTable("reportsClient", {
     cpu: text(),
     gpu: text(),
     bios: text(),
-    description: text(),
+    description: text().notNull(),
     status: varchar("status", {enum: ["Atendido", "Pendiente"]}),
     clientId: integer().references(()=>Clients.id,{onDelete:'cascade'})
 });

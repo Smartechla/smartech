@@ -3,7 +3,7 @@ import Nav from "./Nav"
 
 export default () =>{
     const [reports, setReports] = useState([])
-    const [text, setText] = useState('');
+    const [description, setdescription] = useState('');
 
     useEffect(()=>{
         getReports()
@@ -17,16 +17,16 @@ export default () =>{
     }
 
     const sendReport = async ()=>{
-        if(text === ""){
+        if(description === ""){
             alert("explique el problema porfavor porfavor")
             return;
         }
         const res = await fetch('/api/client', {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify({text})
+            body: JSON.stringify({description})
         })
-        setText('')
+        setdescription('')
         getReports()
         const result = await res.json();
         alert(result.message)
@@ -36,8 +36,8 @@ export default () =>{
         <div className="form">
             <h1>Cuentanos el problema</h1>
             <form>
-                <textarea onChange={e=>setText(e.target.value)}
-                    value={text}
+                <textarea onChange={e=>setdescription(e.target.value)}
+                    value={description}
                     placeholder="ejemplo: no funciona la impresora de caja"
                 ></textarea>
             </form>
